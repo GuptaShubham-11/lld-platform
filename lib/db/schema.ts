@@ -4,6 +4,7 @@ import * as p from 'drizzle-orm/pg-core';
 export const users = p.pgTable('users', {
   id: p.uuid().defaultRandom().primaryKey(),
   name: p.varchar({ length: 255 }).notNull(),
+  password: p.varchar({ length: 255 }).notNull(),
 });
 
 export const problems = p.pgTable('problems', {
