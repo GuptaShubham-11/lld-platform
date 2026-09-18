@@ -26,9 +26,6 @@ export const practiceSessions = p.pgTable(
       .uuid('problem_id')
       .notNull()
       .references(() => problems.id, { onDelete: 'cascade' }),
-    status: p.varchar({ length: 50 }).notNull(),
-    startedAt: p.timestamp('started_at').defaultNow().notNull(),
-    endedAt: p.timestamp('ended_at'),
   },
   (t) => [
     p.index('practice_sessions_user_id_idx').on(t.userId),
