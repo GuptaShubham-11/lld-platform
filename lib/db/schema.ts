@@ -33,6 +33,13 @@ export const practiceSessions = p.pgTable(
   ]
 );
 
+export const evaluationStatusEnum = p.pgEnum('evaluation_status', [
+  'pending',
+  'evaluating',
+  'completed',
+  'failed',
+]);
+
 export const answers = p.pgTable(
   'answers',
   {
@@ -55,12 +62,16 @@ export const answers = p.pgTable(
     attemptStatus: p.varchar('attempt_status', { length: 50 }).notNull(),
     durationSec: p.integer('duration_sec'),
     version: p.integer().default(1).notNull(),
+    evaluationStatus: evaluationStatusEnum('evaluation_status').notNull().default('pending'),
+    evaluationFailureReason: p.text('evaluation_failure_reason'),
     createdAt: p.timestamp('created_at').defaultNow().notNull(),
   },
   (t) => [
     p.index('answers_session_id_idx').on(t.sessionId),
     p.index('answers_user_id_idx').on(t.userId),
     p.index('answers_problem_id_idx').on(t.problemId),
+    p.uniqueIndex('answers_session_hash_idx').on(t.sessionId, t.submissionHash),
+    p.uniqueIndex('answers_session_version_idx').on(t.sessionId, t.version),
   ]
 );
 
@@ -155,3 +166,18 @@ export const relations = defineRelations(
     },
   })
 );
+
+export type InsertUser = typeof users.$inferInsert;
+export type SelectUser = typeof users.$inferSelect;
+
+export type InsertProblem = typeof problems.$inferInsert;
+export type SelectProblem = typeof problems.$inferSelect;
+
+export type InsertPracticeSession = typeof practiceSessions.$inferInsert;
+export type SelectPracticeSession = typeof practiceSessions.$inferSelect;
+
+export type InsertAnswer = typeof answers.$inferInsert;
+export type SelectAnswer = typeof answers.$inferSelect;
+
+export type InsertFeedback = typeof feedbacks.$inferInsert;
+export type SelectFeedback = typeof feedbacks.$inferSelect;
