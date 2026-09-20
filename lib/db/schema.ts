@@ -87,6 +87,8 @@ export const feedbacks = p.pgTable(
     overallScore: p.integer('overall_score').notNull(),
     rubricFeedback: p.json('rubric_feedback').notNull(),
     evaluationStrategy: p.varchar('evaluation_strategy', { length: 100 }).notNull(),
+    keyTakeaways: p.jsonb('key_takeaways').$type<string[]>().notNull(),
+    progressDelta: p.text('progress_delta').notNull(),
     createdAt: p.timestamp('created_at').defaultNow().notNull(),
   },
   (t) => [p.index('feedbacks_answer_id_idx').on(t.answerId)]

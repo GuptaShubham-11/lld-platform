@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
       {
         success: true,
         message: 'Problem added successfully',
-        data: problem,
+        data: problem[0],
       },
       { status: 201 }
     );

@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     const existingSession = await db
       .select()
       .from(practiceSessions)
-      .where(and(eq(practiceSessions.id, problemId), eq(practiceSessions.userId, userId)));
+      .where(and(eq(practiceSessions.problemId, problemId), eq(practiceSessions.userId, userId)));
 
     if (existingSession.length > 0) {
       return NextResponse.json(
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
       {
         success: true,
         message: 'Session started successfully',
-        data: session,
+        data: session[0],
       },
       { status: 201 }
     );
