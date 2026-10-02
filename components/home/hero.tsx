@@ -3,6 +3,7 @@ import { HugeiconsIcon } from '@hugeicons/react';
 import { Container } from '../core/container';
 import { HeroSkeleton } from './hero-skeleton';
 import { Button } from '../ui/button';
+import { AuthForm } from '../auth/auth-form';
 
 export function Hero() {
   return (
@@ -32,10 +33,8 @@ export function Hero() {
         </p>
 
         <div className="flex items-center gap-4 mt-4">
-          <Button size={'lg'} className="mt-4 font-space-heading ">
-            Start Solving Problems
-          </Button>
-          <Button size={'lg'} variant={'outline'} className="mt-4 font-space-heading ">
+          <AuthForm />
+          <Button size={'lg'} variant={'outline'} className="font-space-heading ">
             Browse Problems
           </Button>
         </div>
